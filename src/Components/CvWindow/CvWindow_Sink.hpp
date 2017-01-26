@@ -209,6 +209,7 @@ protected:
 
 	Base::Property<std::string> filename;
 	Base::Property<std::string> dir;
+	Base::Property<bool> window_resize;
 	
 	
 	std::vector<MouseCallbackInfo*> callback_info;

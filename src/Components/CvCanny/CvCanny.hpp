@@ -85,6 +85,9 @@ protected:
 	Base::Property<int> lowerThreshold;
 	Base::Property<int> higherThreshold;
 	Base::Property<int> kernelSize;
+	Base::Property<double> ratio;
+	Base::Property<bool> autoThresh;
+
 
 };
 

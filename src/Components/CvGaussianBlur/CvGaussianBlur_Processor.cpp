@@ -91,7 +91,7 @@ void CvGaussianBlur_Processor::onNewImage()
 {
 	LOG(LTRACE) << "CvGaussianBlur_Processor::onNewImage\n";
 	try {
-		cv::Mat img = in_img.read();
+		cv::Mat img = in_img.read().clone();
 		cv::GaussianBlur(img, img, cv::Size(kernel_width, kernel_height), sigmax, sigmay);
 		out_img.write(img);
 	} catch (...) {

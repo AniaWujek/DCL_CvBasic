@@ -35,11 +35,13 @@ CvWindow_Sink::CvWindow_Sink(const std::string & name) :
 			grid_step_x("grid.step_x", 640),
 			grid_step_y("grid.step_y", 510),
 			grid_offset_x("grid.offset_x", 0),
-			grid_offset_y("grid.offset_y", 0)
+			grid_offset_y("grid.offset_y", 0),
+			window_resize("window_resize",false)
 {
 	CLOG(LTRACE) << "Hello CvWindow_Sink\n";
 
 	registerProperty(title);
+	registerProperty(window_resize);
 
 	count.setToolTip("Total number of displayed windows");
 	registerProperty(count);
@@ -125,7 +127,12 @@ bool CvWindow_Sink::onInit() {
 	int gy = grid_offset_y;
 
 	for (int i = 0; i < count; ++i) {
-		cv::namedWindow(titles[i]);
+		if(window_resize) {
+			cv::namedWindow(titles[i], cv::WINDOW_NORMAL);
+		}
+		else {
+			cv::namedWindow(titles[i]);
+		}
 		
 		if (grid_enabled) {
 			cv::moveWindow(titles[i], gx, gy);

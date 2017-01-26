@@ -19,7 +19,9 @@ CvCanny::CvCanny(const std::string & name) :
 		Base::Component(name),
 		lowerThreshold("histeresis.lowerThreshold", 50, "range"),
 		higherThreshold("histeresis.higherThreshold", 150, "range"),
-		kernelSize("kernelSize", 3)
+		kernelSize("kernelSize", 3),
+		ratio("ratio", 0.5),
+		autoThresh("autoThresh", false)
 {
 	// Constraints.
 	lowerThreshold.addConstraint("0");
@@ -31,6 +33,8 @@ CvCanny::CvCanny(const std::string & name) :
 	registerProperty(lowerThreshold);
 	registerProperty(higherThreshold);
 	registerProperty(kernelSize);
+	registerProperty(ratio);
+	registerProperty(autoThresh);
 }
 
 CvCanny::~CvCanny() {
@@ -77,6 +81,13 @@ void CvCanny::onNewImage()
 		cv::Mat dst = cv::Mat::zeros(in.size(), CV_8U);
 
 		// Canny edge detector.
+		double high_thresh;
+		cv::Mat thresh_im;
+		if(autoThresh) {
+			high_thresh = cv::threshold(in, thresh_im, 0, 255, cv::THRESH_BINARY + cv::THRESH_OTSU);
+			higherThreshold = high_thresh;
+			lowerThreshold = ratio*higherThreshold;
+		}
 		Canny( in, dst, lowerThreshold, higherThreshold, kernelSize );
 
 		// Use mask if provided

@@ -52,6 +52,7 @@ void CvHoughLines_Processor::prepareInterface() {
 
 	registerStream("in_img", &in_img);
 	registerStream("out_lines", &out_lines);
+	registerStream("out_linesDrawable", &out_linesDrawable);
 }
 
 bool CvHoughLines_Processor::onInit()
@@ -99,7 +100,8 @@ void CvHoughLines_Processor::onNewImage()
 	}
 
 
-	out_lines.write(c);
+	out_linesDrawable.write(c);
+	out_lines.write(lines);
 }
 
 }//: namespace CvHoughLines
