@@ -101,7 +101,7 @@ void PerspectiveTransform::transformImage() {
 	cv::Mat img = in_img.read();
 	cv::Mat H = in_homography.read();
 	cv::Mat out;
-	cv::warpPerspective(img, out, H, cv::Size(1280, 960));
+	cv::warpPerspective(img, out, H, img.size());
 	out_img.write(out);
 }
 

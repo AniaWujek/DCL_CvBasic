@@ -9,7 +9,6 @@
 
 #include "FeatureDetector.hpp"
 #include "Common/Logger.hpp"
-
 #include <boost/bind.hpp>
 
 namespace Processors {
@@ -95,14 +94,20 @@ void FeatureDetector::onNewImageA() {
 	cv::Mat descriptors;
 	
 	if (active_extractor == "ORB") {
-		cv::ORB orb(orb_nfeatures, orb_scale_factor, orb_nlevels, orb_edge_threshold, 0, orb_wta_k, orb_score_type, orb_patch_size);
-		orb(img, cv::Mat(), keypoints, descriptors);
+		//cv::ORB orb(orb_nfeatures, orb_scale_factor, orb_nlevels, orb_edge_threshold, 0, orb_wta_k, orb_score_type, orb_patch_size);
+		//orb(img, cv::Mat(), keypoints, descriptors);
+		cv::Ptr<cv::ORB> orb = cv::ORB::create(orb_nfeatures, orb_scale_factor, orb_nlevels, orb_edge_threshold, 0, orb_wta_k, orb_score_type, orb_patch_size);
+		orb->detectAndCompute(img, cv::Mat(), keypoints, descriptors);
 	}
 	
 	if (active_extractor == "BRISK") {
-		cv::BRISK brisk(brisk_threshold, brisk_octaves, brisk_pattern_scale);
-		brisk.detect( img, keypoints );
-		brisk.compute( img, keypoints, descriptors);
+		//cv::BRISK brisk(brisk_threshold, brisk_octaves, brisk_pattern_scale);
+		//brisk.detect( img, keypoints );
+		//brisk.compute( img, keypoints, descriptors);
+
+		cv::Ptr<cv::BRISK> brisk = cv::BRISK::create(brisk_threshold, brisk_octaves, brisk_pattern_scale);
+		brisk->detect( img, keypoints );
+		brisk->compute( img, keypoints, descriptors);
 	}
 	
 	if (keypoints.size() < 1) {
@@ -125,14 +130,20 @@ void FeatureDetector::onNewImageB() {
 	cv::Mat descriptors;
 	
 	if (active_extractor == "ORB") {
-		cv::ORB orb(orb_nfeatures, orb_scale_factor, orb_nlevels, orb_edge_threshold, 0, orb_wta_k, orb_score_type, orb_patch_size);
-		orb(img, cv::Mat(), keypoints, descriptors);
+		//cv::ORB orb(orb_nfeatures, orb_scale_factor, orb_nlevels, orb_edge_threshold, 0, orb_wta_k, orb_score_type, orb_patch_size);
+		//orb(img, cv::Mat(), keypoints, descriptors);
+		cv::Ptr<cv::ORB> orb = cv::ORB::create(orb_nfeatures, orb_scale_factor, orb_nlevels, orb_edge_threshold, 0, orb_wta_k, orb_score_type, orb_patch_size);
+		orb->detectAndCompute(img, cv::Mat(), keypoints, descriptors);
 	}
 	
 	if (active_extractor == "BRISK") {
-		cv::BRISK brisk(brisk_threshold, brisk_octaves, brisk_pattern_scale);
-		brisk.detect( img, keypoints );
-		brisk.compute( img, keypoints, descriptors);
+		//cv::BRISK brisk(brisk_threshold, brisk_octaves, brisk_pattern_scale);
+		//brisk.detect( img, keypoints );
+		//brisk.compute( img, keypoints, descriptors);
+
+		cv::Ptr<cv::BRISK> brisk = cv::BRISK::create(brisk_threshold, brisk_octaves, brisk_pattern_scale);
+		brisk->detect( img, keypoints );
+		brisk->compute( img, keypoints, descriptors);
 	}
 	
 	if (keypoints.size() < 1) {

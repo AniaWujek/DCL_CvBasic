@@ -107,11 +107,11 @@ void DrawCoordinateSystem::projectPoints(){
 	}
 
 	// Draw lines between projected points.
-	Types::Line ax(image_points[0], image_points[1]);
+	Types::Line ax(image_points[0], image_points[1], cv::Scalar(255,0,0));
 	ax.setCol(cv::Scalar(255, 0, 0));
-	Types::Line ay(image_points[0], image_points[2]);
+	Types::Line ay(image_points[0], image_points[2], cv::Scalar(0, 255, 0));
 	ay.setCol(cv::Scalar(0, 255, 0));
-	Types::Line az(image_points[0], image_points[3]);
+	Types::Line az(image_points[0], image_points[3], cv::Scalar(0, 0, 255));
 	az.setCol(cv::Scalar(0, 0, 255));
 
 	// Add lines to container.

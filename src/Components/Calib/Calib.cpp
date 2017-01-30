@@ -6,6 +6,8 @@
 
 #include <memory>
 #include <string>
+#include <iostream>
+#include <fstream>
 
 #include "Calib.hpp"
 #include "Common/Logger.hpp"
@@ -140,6 +142,12 @@ void Calib::perform_calibration()
 		camera_info.setDistCoeffs(distCoeffs);
 		camera_info.setRotationMatrix(cv::Mat::eye(3, 3, CV_64F));
 		camera_info.setTranlationMatrix(cv::Mat::zeros(3, 1, CV_64F));
+
+		std::ofstream calib_file;
+        calib_file.open("/home/anna/discode/DCL/calib.txt");
+        calib_file << "Camera matrix:\n" << cameraMatrix;
+        calib_file << "\nDist coeffs:\n" << distCoeffs;
+        calib_file.close();
 
 		// Write parameters to the camerainfo
 		out_camerainfo.write(camera_info);

@@ -60,7 +60,7 @@ void Sum::onNewImage()
 {
 	LOG(LTRACE) << "Sum::onNewImage\n";
 	try {
-		cv::Mat img1 = in_img1.read();
+		cv::Mat img1 = in_img1.read().clone();
 		cv::Mat img2 = in_img2.read().clone();
 
 		// TODO: add comparison of size1 & size2.
@@ -68,7 +68,7 @@ void Sum::onNewImage()
 
 		// Create a matrix with the adequate size and depth.
 		tmp.create(img1.size(), img1.depth());
-
+		std::cout<<"\n*** img1: "<<img1.rows<<"x"<<img1.cols<<", img2: "<<img2.rows<<"x"<<img2.cols<<" ***\n";
 		// Sum the images (normalized).
 		tmp = (img1 + img2) * norm;
 

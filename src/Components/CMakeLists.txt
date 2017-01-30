@@ -90,3 +90,7 @@ ADD_COMPONENT(DrawCoordinateSystem)
 ADD_COMPONENT(FindHomography)
 
 ADD_COMPONENT(RotateImage)
+
+ADD_COMPONENT(PerspectiveTransform)
+
+ADD_COMPONENT(FeatureDetector)

@@ -80,7 +80,7 @@ void CvUndistort_Processor::onNewImage()
 	cv::Mat originalImage, undistortedImage;
 
 	// Read input image and camera info.
-	originalImage = in_img.read();
+	originalImage = in_img.read().clone();
 	Types::CameraInfo ci = in_camera_info.read();
 	
 	// Check if camera info was changed.
