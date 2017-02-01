@@ -199,6 +199,7 @@ void CvWindow_Sink::onNewImageN(int n) {
 		if (!in_img[n]->empty()) {
 			img[n] = in_img[n]->read().clone();
 		}
+		cv::Mat m;
 
 		if (to_draw_timeout[n])
 			--to_draw_timeout[n];

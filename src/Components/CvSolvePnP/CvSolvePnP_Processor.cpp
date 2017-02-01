@@ -57,6 +57,7 @@ void CvSolvePnP_Processor::prepareInterface() {
 	registerStream("out_homogMatrix", &out_homogMatrix);
 	registerStream("out_rvec", &out_rvec);
 	registerStream("out_tvec", &out_tvec);
+	registerStream("out_homogMatrixVec", &out_homogMatrixVec);
 }
 
 bool CvSolvePnP_Processor::onStart()
@@ -209,6 +210,14 @@ void CvSolvePnP_Processor::onNewObject3D()
 	out_rvec.write(rvec.clone());
 	out_tvec.write(tvec.clone());*/
 	out_homogMatrix.write(hm);
+	std::vector<float> m;
+	for(int i = 0; i < 3; ++i) {
+        for(int j = 0; j < 4; j++) {
+                //m.push_back(hm.getElement(i,j));
+                m.push_back(hm(i,j));
+            }
+    }
+    out_homogMatrixVec.write(m);
 }
 
 } // namespace CvSolvePnP
