@@ -210,12 +210,14 @@ void CvSolvePnP_Processor::onNewObject3D()
 	out_rvec.write(rvec.clone());
 	out_tvec.write(tvec.clone());*/
 	out_homogMatrix.write(hm);
-	std::vector<float> m;
-	for(int i = 0; i < 3; ++i) {
-        for(int j = 0; j < 4; j++) {
+	std::vector<std::vector<float> > m;
+	for(int i = 0; i < 4; ++i) {
+		std::vector<float> row;
+        for(int j = 0; j < 4; j++) {        	
                 //m.push_back(hm.getElement(i,j));
-                m.push_back(hm(i,j));
+                row.push_back(hm(i,j));
             }
+            m.push_back(row);
     }
     out_homogMatrixVec.write(m);
 }
