@@ -33,6 +33,7 @@ void PerspectiveTransform::prepareInterface() {
 	registerStream("out_draw", &out_draw);
 	registerStream("in_img", &in_img);
 	registerStream("out_img", &out_img);
+	registerStream("out_pointsVec", &out_pointsVec);
 	// Register handlers
 	registerHandler("transformPoint", boost::bind(&PerspectiveTransform::transformPoint, this));
 	addDependency("transformPoint", &in_point);
@@ -88,7 +89,15 @@ void PerspectiveTransform::transformPoints() {
 	cv::perspectiveTransform(points, out, H);
 	Types::Points pts;
 	pts.setPoints(out);
-	
+
+	std::vector<std::vector<float> > pointsVec;
+	for(int i=0; i<out.size(); ++i) {
+		std::vector<float> row;
+		row.push_back(out[i].x);
+		row.push_back(out[i].y);
+		pointsVec.push_back(row);
+	}
+	out_pointsVec.write(pointsVec);
 	out_points.write(out);
 	out_draw.write(pts);
 }

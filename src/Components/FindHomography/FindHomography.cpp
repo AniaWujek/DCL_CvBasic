@@ -29,11 +29,21 @@ void FindHomography::prepareInterface() {
 	registerStream("in_features0", &in_features0);
 	registerStream("in_features1", &in_features1);
 	registerStream("out_homography", &out_homography);
+	registerStream("in_modelPoints", &in_modelPoints);
+	registerStream("in_objectPoints", &in_objectPoints);
+	registerStream("in_model", &in_model);
 	// Register handlers
 	registerHandler("calculate", boost::bind(&FindHomography::calculate, this));
 	addDependency("calculate", &in_matches);
 	addDependency("calculate", &in_features0);
 	addDependency("calculate", &in_features1);
+
+	registerHandler("calculate2", boost::bind(&FindHomography::calculate2, this));
+	addDependency("calculate2", &in_modelPoints);
+	addDependency("calculate2", &in_objectPoints);
+
+	registerHandler("calculate3", boost::bind(&FindHomography::calculate3, this));
+	addDependency("calculate3", &in_model);
 
 }
 
@@ -83,6 +93,26 @@ void FindHomography::calculate() {
   CLOG(LINFO) << "Correct matches: " << cv::sum(mask)[0];
   
   out_homography.write(H);
+}
+
+void FindHomography::calculate2() {
+	std::vector<cv::Point2f> model = in_modelPoints.read();
+	std::vector<cv::Point2f> object = in_objectPoints.read();
+	cv::Mat H = cv::findHomography(model, object, 0, 3, cv::noArray());
+	out_homography.write(H);
+}
+
+void FindHomography::calculate3() {
+	Types::Objects3D::Object3D obj = in_model.read();
+	std::vector<cv::Point3f> model3 = obj.getModelPoints();
+	std::vector<cv::Point2f> object = obj.getImagePoints();
+
+	std::vector<cv::Point2f> model;
+	for(int i=0; i<model3.size(); ++i) {
+		model.push_back(cv::Point2f(model3[i].x, model3[i].y));
+	}
+	cv::Mat H = cv::findHomography(object, model, 0, 3, cv::noArray());
+	out_homography.write(H);
 }
 
 

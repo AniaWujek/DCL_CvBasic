@@ -14,6 +14,7 @@
 #include "EventHandler2.hpp"
 
 #include "Types/Features.hpp"
+#include "Types/Objects3D/Object3D.hpp"
 
 #include <opencv2/opencv.hpp>
 
@@ -74,6 +75,11 @@ protected:
 	Base::DataStreamIn<Types::Features> in_features0;
 	Base::DataStreamIn<Types::Features> in_features1;
 
+	Base::DataStreamIn<std::vector<cv::Point2f> > in_modelPoints;
+	Base::DataStreamIn<std::vector<cv::Point2f> > in_objectPoints;
+
+	Base::DataStreamIn<Types::Objects3D::Object3D> in_model;
+
 	// Output data streams
 	Base::DataStreamOut<cv::Mat> out_homography;
 
@@ -84,6 +90,8 @@ protected:
 	
 	// Handlers
 	void calculate();
+	void calculate2();
+	void calculate3();
 
 };
 

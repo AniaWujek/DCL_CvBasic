@@ -78,9 +78,9 @@ protected:
 	// Output data streams
 	Base::DataStreamOut<cv::Point2f> out_point;
 	Base::DataStreamOut<std::vector<cv::Point2f> > out_points;
+	Base::DataStreamOut<std::vector<std::vector<float> > > out_pointsVec;
 	Base::DataStreamOut<Types::Points> out_draw;
 	Base::DataStreamOut<cv::Mat> out_img;
-
 	// Handlers
 
 	// Properties
