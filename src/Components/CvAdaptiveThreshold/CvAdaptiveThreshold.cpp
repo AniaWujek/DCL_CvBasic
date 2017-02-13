@@ -17,8 +17,8 @@ namespace CvAdaptiveThreshold {
 CvAdaptiveThreshold_Processor::CvAdaptiveThreshold_Processor(const std::string & name) :
 	Base::Component(name),
 	maxValue("maxValue", 255, "range"),
-	method("method", string("ADAPTIVE_THRESH_MEAN_C"), "combo"),
-	thresholdType("thresholdType", string("THRESH_BINARY"), "combo"),
+	method("method", std::string("ADAPTIVE_THRESH_MEAN_C"), "combo"),
+	thresholdType("thresholdType", std::string("THRESH_BINARY"), "combo"),
 	blockSize("blockSize", 5, "range"),
 	C("C", 3, "range")
 {

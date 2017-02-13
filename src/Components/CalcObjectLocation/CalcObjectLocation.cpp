@@ -59,10 +59,10 @@ void CalcObjectLocation::calculate() {
 	CLOG(LTRACE)<<"calculate()";
 
 	Types::HomogMatrix homogMatrix;
-	vector<cv::Mat_<double> > rvec;
-	vector<cv::Mat_<double> > tvec;
-	vector<cv::Mat_<double> > axis;
-	vector<double> fi;
+	std::vector<cv::Mat_<double> > rvec;
+	std::vector<cv::Mat_<double> > tvec;
+	std::vector<cv::Mat_<double> > axis;
+	std::vector<double> fi;
 	cv::Mat_<double> tvectemp;
 	cv::Mat_<double> rotMatrix;
 	rotMatrix = cv::Mat_<double>::zeros(3,3);

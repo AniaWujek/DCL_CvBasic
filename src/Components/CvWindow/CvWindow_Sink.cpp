@@ -271,7 +271,7 @@ void CvWindow_Sink::onSaveImageN(int n) {
 
 	try {
 		// Change compression to lowest.
-	        vector<int> param;
+	        std::vector<int> param;
 	        param.push_back(CV_IMWRITE_PNG_COMPRESSION);
 	        param.push_back(0); // MAX_MEM_LEVEL = 9 
 		// Save image.
@@ -297,7 +297,7 @@ void CvWindow_Sink::onSaveAllImages() {
 	std::strftime(buffer,80,"%Y-%m-%d-%H-%M-%S",timeinfo);
 
 	// Change compression to lowest.
-        vector<int> param;
+        std::vector<int> param;
 	param.push_back(CV_IMWRITE_PNG_COMPRESSION);
 	param.push_back(0); // MAX_MEM_LEVEL = 9 
 

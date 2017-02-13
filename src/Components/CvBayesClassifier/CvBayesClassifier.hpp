@@ -72,7 +72,7 @@ protected:
 	bool onStop();
 
 	/// Returns matrix with samples.
-	void prepareSampleMatrix(const vector<Moments>& vector_, cv::Mat& mat_);
+	void prepareSampleMatrix(const std::vector<Moments>& vector_, cv::Mat& mat_);
 
 	/// Returns vector with responses.
 	void prepareResponseVector(cv::Mat& resp_mat_);
@@ -116,7 +116,7 @@ protected:
 	void onNewData();
 
 	/// Input data stream
-	Base::DataStreamIn<vector<Moments> > in_moments;
+	Base::DataStreamIn<std::vector<Moments> > in_moments;
 
 	// Flag: if set, the Bayes uses spatial moments.
 	Base::Property<bool> use_spatial;
@@ -141,20 +141,20 @@ protected:
 	Base::Property<std::string> filename;
 
 	// Checks whether such a set of moments alread exists in dataset.
-	bool isAlreadyPresent(const vector<Moments>& dataset_, const Moments &m_);
+	bool isAlreadyPresent(const std::vector<Moments>& dataset_, const Moments &m_);
 
 private:
 	// Classifier.true
 	cv::Ptr<cv::ml::NormalBayesClassifier> bayes;
 
 	// The vector of vectors of moments used for training
-	vector<Moments> training_dataset;
+	std::vector<Moments> training_dataset;
 
 	// The vector of vectors of moments used for training
-	vector<short> training_responses;
+	std::vector<short> training_responses;
 
 	// Class names
-	vector<std::string> classes;
+	std::vector<std::string> classes;
 
 	// Flag used for memorizing that user demanded to add the incoming moments to dataset.
 	bool add;

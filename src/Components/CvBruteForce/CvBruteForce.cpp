@@ -117,7 +117,7 @@ void CvBruteForce::onNewImage()
 		Mat img_matches;
 		drawMatches( img_1, features_1.features, img_2, features_2.features,
 				   good_matches, img_matches, Scalar::all(-1), Scalar::all(-1),
-				   vector<char>(), DrawMatchesFlags::DEFAULT );
+				   std::vector<char>(), DrawMatchesFlags::DEFAULT );
 
 		// Print stats.
 		if (print_stats) {

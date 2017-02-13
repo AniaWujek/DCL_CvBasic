@@ -55,10 +55,10 @@ void CvMoments::onNewContours()
 	CLOG(LTRACE) << "CvMoments::onNewContours\n";
 	try {
 		// Input: a binary or edge image.
-		vector<vector<Point> > contours = in_contours.read();
+		std::vector<std::vector<Point> > contours = in_contours.read();
 
 		// Compute moments.
-		vector<Moments> mu(contours.size() );
+		std::vector<Moments> mu(contours.size() );
 		for(unsigned int i = 0; i < contours.size(); i++ )
 		{
 			mu[i] = moments( contours[i], false );

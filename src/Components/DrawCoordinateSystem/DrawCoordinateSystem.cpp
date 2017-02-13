@@ -88,8 +88,8 @@ void DrawCoordinateSystem::projectPoints(){
 	// Get camera info properties.
 	Types::CameraInfo camera_matrix = in_camera_matrix.read();
 
-	vector<cv::Point3f> object_points;
-	vector<cv::Point2f> image_points;
+	std::vector<cv::Point3f> object_points;
+	std::vector<cv::Point2f> image_points;
 
 	// Create four points constituting ends of three lines.
 	object_points.push_back(cv::Point3f(0,0,0));

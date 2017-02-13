@@ -78,7 +78,7 @@ protected:
 	Base::DataStreamIn <cv::Mat> in_img;
 
 	/// Output data stream containing extracted contours
-	Base::DataStreamOut <vector<vector<Point> > > out_contours;
+	Base::DataStreamOut <std::vector<std::vector<Point> > > out_contours;
 	Base::DataStreamOut <cv::Mat> out_img;
 	Base::DataStreamOut < std::vector<cv::Moments> > out_moments;
 	

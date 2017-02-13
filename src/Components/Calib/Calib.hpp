@@ -104,10 +104,10 @@ protected:
 
 private:
    // The vector of vectors of the object point projections on the calibration pattern views, one vector per a view.
-	vector<vector<cv::Point2f> > imagePoints;
+	std::vector<std::vector<cv::Point2f> > imagePoints;
 
 	// The vector of vectors of points on the calibration pattern in its coordinate system, one vector per view.
-	vector<vector<cv::Point3f> > objectPoints;
+	std::vector<std::vector<cv::Point3f> > objectPoints;
 
 	cv::Size imageSize;
 

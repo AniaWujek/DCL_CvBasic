@@ -85,9 +85,9 @@ protected:
 	/// Event handlers
 	std::vector< Base::EventHandler2* > handlers;
 
-	Base::Property<string> directory;
-	Base::Property<string> base_name;
-	Base::Property<string> format;
+	Base::Property<std::string> directory;
+	Base::Property<std::string> base_name;
+	Base::Property<std::string> format;
 	Base::Property<int> digits;
 	Base::Property<int> count;
 

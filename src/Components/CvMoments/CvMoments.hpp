@@ -74,10 +74,10 @@ protected:
 	void onNewContours();
 
 	/// Input data stream
-	Base::DataStreamIn <vector<vector<Point> > > in_contours;
+	Base::DataStreamIn <std::vector<std::vector<Point> > > in_contours;
 
 	/// Output data stream containing extracted moments
-	Base::DataStreamOut <vector<Moments> > out_moments;
+	Base::DataStreamOut <std::vector<Moments> > out_moments;
 
 };
 

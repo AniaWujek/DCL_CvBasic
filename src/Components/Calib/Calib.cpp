@@ -124,9 +124,9 @@ void Calib::perform_calibration()
 		cv::Mat distCoeffs = cv::Mat::zeros(8, 1, CV_32F);
 
 		// The output vector of rotation vectors.
-		vector<cv::Mat> rvecs;
+		std::vector<cv::Mat> rvecs;
 		// The output vector of translation vectors.
-		vector<cv::Mat> tvecs;
+		std::vector<cv::Mat> tvecs;
 
 		// Calibrate camera.
 		double errors = cv::calibrateCamera(objectPoints, imagePoints, imageSize, cameraMatrix, distCoeffs, rvecs, tvecs);

@@ -69,7 +69,7 @@ private:
 	Base::DataStreamIn <cv::Mat> in_img;
 
 	Base::DataStreamOut <Types::DrawableContainer> out_linesDrawable;
-	Base::DataStreamOut < vector<cv::Vec4i> > out_lines;
+	Base::DataStreamOut < std::vector<cv::Vec4i> > out_lines;
 
 	void onNewImage();
 };

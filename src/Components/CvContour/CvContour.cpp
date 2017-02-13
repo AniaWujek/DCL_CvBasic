@@ -66,12 +66,12 @@ void CvContour::onNewImage()
 		cv::Mat input = in_img.read();
 
 		// Find contours.
-		vector<vector<Point> > contours;
-		vector<Vec4i> hierarchy;
+		std::vector<std::vector<Point> > contours;
+		std::vector<Vec4i> hierarchy;
 		findContours( input, contours, hierarchy, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_SIMPLE, Point(0, 0) );
 
 		// Get the moments
-		vector<Moments> mu(contours.size() );
+		std::vector<Moments> mu(contours.size() );
 		for( int i = 0; i < contours.size(); i++ ) { 
 			mu[i] = moments( contours[i], false ); 
 		}
@@ -79,9 +79,9 @@ void CvContour::onNewImage()
 		CLOG(LINFO) << "Found "<< contours.size() << " contours";
 
 		// filter contours
-		vector<vector<Point> >::iterator c_iter = contours.begin();
-		vector<Vec4i>::iterator h_iter = hierarchy.begin();
-		vector<Moments>::iterator m_iter = mu.begin();
+		std::vector<std::vector<Point> >::iterator c_iter = contours.begin();
+		std::vector<Vec4i>::iterator h_iter = hierarchy.begin();
+		std::vector<Moments>::iterator m_iter = mu.begin();
 		
 		while (c_iter != contours.end()) {
 			// check contours area
@@ -98,7 +98,7 @@ void CvContour::onNewImage()
 		
 
 		//  Get the mass centers:
-		vector<Point2f> mc( contours.size() );
+		std::vector<Point2f> mc( contours.size() );
 		for( int i = 0; i < contours.size(); i++ ) {
 			mc[i] = Point2f( mu[i].m10/mu[i].m00 , mu[i].m01/mu[i].m00 ); 
 		}
