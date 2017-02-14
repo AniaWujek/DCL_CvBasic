@@ -112,6 +112,8 @@ void CvSolvePnP_Processor::onNewObject3D()
 	Mat modelPoints(object3D->getModelPoints());
 	Mat imagePoints(object3D->getImagePoints());
 
+	std::cout<<"\n\n *** \n\n"<<modelPoints<<"\n\n"<<imagePoints<<"\n\n *** \n\n";
+
 	
 	// Check whether the image is rectified.
 	if (prop_rectified) {

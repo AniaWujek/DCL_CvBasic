@@ -45,14 +45,21 @@ void Calib::prepareInterface() {
 	// Register handler performing the calibration.
 	h_perform_calibration.setup(boost::bind(&Calib::perform_calibration, this));
 	registerHandler("perform_calibration", &h_perform_calibration);
+	addDependency("perform_calibration", &in_object3D);
+	addDependency("perform_calibration", &in_camerainfo);
 
 	// Register handler setting the flag for acquisition of a single object3D.
 	h_add_object3D.setup(boost::bind(&Calib::add_object3D, this));
 	registerHandler("add_object3D", &h_add_object3D);
+	addDependency("add_object3D", &in_object3D);
+	addDependency("add_object3D", &in_camerainfo);
 
 	// Register handler realizing the clearance of the whole dataset.
 	h_clear_dataset.setup(boost::bind(&Calib::clear_dataset, this));
 	registerHandler("clear_dataset", &h_clear_dataset);
+
+	h_new_camera_info.setup(boost::bind(&Calib::new_camera_info, this));
+	registerHandler("new_camera_info", &h_new_camera_info);
 }
 
 bool Calib::onInit() {
@@ -70,6 +77,10 @@ bool Calib::onStop() {
 
 bool Calib::onStart() {
 	return true;
+}
+
+void Calib::new_camera_info() {
+	calibrated = false;
 }
 
 void Calib::process_object3D() {
@@ -129,28 +140,35 @@ void Calib::perform_calibration()
 		std::vector<cv::Mat> tvecs;
 
 		// Calibrate camera.
-		double errors = cv::calibrateCamera(objectPoints, imagePoints, imageSize, cameraMatrix, distCoeffs, rvecs, tvecs);
+		if(!calibrated) {
+			calibrated = true;
+			double errors = cv::calibrateCamera(objectPoints, imagePoints, imageSize, cameraMatrix, distCoeffs, rvecs, tvecs);
 
-		// Display the results.
-		LOG(LNOTICE) << "Calibration ended with reprojection error =" << errors;
-		LOG(LNOTICE) << "Camera matrix: " << cameraMatrix;
-		LOG(LNOTICE) << "Distortion coefficients: " << distCoeffs;
+			// Display the results.
+			LOG(LNOTICE) << "Calibration ended with reprojection error =" << errors;
+			LOG(LNOTICE) << "Camera matrix: " << cameraMatrix;
+			LOG(LNOTICE) << "Distortion coefficients: " << distCoeffs;
 
-		Types::CameraInfo camera_info;
-		camera_info.setSize(imageSize);
-		camera_info.setCameraMatrix(cameraMatrix);
-		camera_info.setDistCoeffs(distCoeffs);
-		camera_info.setRotationMatrix(cv::Mat::eye(3, 3, CV_64F));
-		camera_info.setTranlationMatrix(cv::Mat::zeros(3, 1, CV_64F));
+			Types::CameraInfo camera_info;
+			camera_info.setSize(imageSize);
+			camera_info.setCameraMatrix(cameraMatrix);
+			camera_info.setDistCoeffs(distCoeffs);
+			camera_info.setRotationMatrix(cv::Mat::eye(3, 3, CV_64F));
+			camera_info.setTranlationMatrix(cv::Mat::zeros(3, 1, CV_64F));
 
-		std::ofstream calib_file;
-        calib_file.open("/home/anna/discode/DCL/calib.txt");
-        calib_file << "Camera matrix:\n" << cameraMatrix;
-        calib_file << "\nDist coeffs:\n" << distCoeffs;
-        calib_file.close();
+			std::ofstream calib_file;
+	        calib_file.open("/home/anna/discode/DCL/calib.txt");
+	        calib_file << "Camera matrix:\n" << cameraMatrix;
+	        calib_file << "\nDist coeffs:\n" << distCoeffs;
+	        calib_file.close();
 
-		// Write parameters to the camerainfo
-		out_camerainfo.write(camera_info);
+			// Write parameters to the camerainfo
+			out_camerainfo.write(camera_info);
+			const_camera_info = camera_info;
+		}
+		else {
+			out_camerainfo.write(const_camera_info);
+		}
     }
     else
 		LOG(LERROR) << "Calib: dataset empty\n";

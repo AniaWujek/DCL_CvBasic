@@ -86,6 +86,8 @@ protected:
 	// Handler activated when user will trigger "clear whole dataset"
 	Base::EventHandler2 h_clear_dataset;
 
+	Base::EventHandler2 h_new_camera_info;
+
 	// Adds received chessboard observation to calibration set.
 	void process_object3D();
 
@@ -97,6 +99,8 @@ protected:
 
 	// Adds received chessboard observation to calibration set.
 	void clear_dataset();
+
+	void new_camera_info();
 
 
 	// Working mode: if activated, memorizes every data set that is received.
@@ -113,6 +117,9 @@ private:
 
 	// Flag used for memorizing that used demanded to process and store the incomming frame.
 	bool addObject3D;
+
+	bool calibrated;
+	Types::CameraInfo const_camera_info;
 };
 
 } //: namespace Calib
