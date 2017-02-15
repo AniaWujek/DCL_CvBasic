@@ -126,9 +126,9 @@ private:
 	Base::DataStreamIn <cv::Mat> in_img;
 	Base::DataStreamIn <Types::CameraInfo> in_camera_info;
 	Base::DataStreamOut <cv::Mat> out_img;
+	Base::DataStreamOut <Types::CameraInfo> out_camera_info;
 
-	Types::CameraInfo camera_info;
-
+	Types::CameraInfo camera_info, new_camera_info;
 	int interpolation;
 	
 	cv::Mat map1, map2, newK;

@@ -19,6 +19,7 @@
 				<Component name="Source" type="CvBasic:CameraOpenCV" priority="1" bump="0">
 					<param name="device">0</param>
 				</Component>
+				
 			</Executor>
 		</Subtask>
 			

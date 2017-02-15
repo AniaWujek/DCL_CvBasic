@@ -37,6 +37,7 @@ void CvUndistort_Processor::prepareInterface() {
 	registerStream("in_img", &in_img);
 	registerStream("out_img", &out_img);
 	registerStream("in_camera_info", &in_camera_info);
+	registerStream("out_camera_info", &out_camera_info);
 
 	registerHandler("onNewImage", boost::bind(&CvUndistort_Processor::onNewImage, this));
 	addDependency("onNewImage", &in_img);
@@ -95,6 +96,12 @@ void CvUndistort_Processor::onNewImage()
 		} else {
 			newK = cv::getOptimalNewCameraMatrix(camera_info.cameraMatrix(), camera_info.distCoeffs(), originalImage.size(), 0.01 * alpha);
 			cv::initUndistortRectifyMap(camera_info.cameraMatrix(), camera_info.distCoeffs(), cv::Mat(), newK, originalImage.size(), CV_32FC1, map1, map2);
+			
+			new_camera_info.setWidth(camera_info.width());
+            new_camera_info.setHeight(camera_info.height());
+            new_camera_info.setCameraMatrix(newK.clone());
+            new_camera_info.setDistCoeffs(Mat::zeros(1, 5, CV_32FC1));
+
 		}
 	}//: if
 
@@ -103,6 +110,7 @@ void CvUndistort_Processor::onNewImage()
 //	undistort(originalImage, undistortedImage, camera_info.cameraMatrix(), camera_info.distCoeffs());
 
 	out_img.write(undistortedImage.clone());
+	out_camera_info.write(new_camera_info);
 }
 
 } // namespace CvUndistort
