@@ -98,6 +98,8 @@ protected:
 	Base::Property<float> brisk_pattern_scale;
 	Base::Property<std::string> active_extractor;
 
+	Base::Property<bool> make_roi;
+
 	
 	// Handlers
 	void onNewImageA();

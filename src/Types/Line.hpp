@@ -17,7 +17,7 @@ namespace Types {
 class Line: public Types::Drawable
 {
 public:
-	Line(cv::Point p1, cv::Point p2, cv::Scalar c = cv::Scalar(255,255,255), float a = 0.0) :
+	Line(cv::Point p1, cv::Point p2, cv::Scalar c = cv::Scalar(0,255,0), float a = 0.0) :
 		p1(p1), p2(p2), lineColor(c), angle(a)
 	{
 		computeLineEquation();
@@ -46,9 +46,9 @@ public:
 
 	virtual void draw(cv::Mat& image, cv::Scalar color, int offsetX = 0, int offsetY = 0)
 	{
-		cv::line(image, p1, p2, lineColor, 2);
-		cv::circle(image, p1, 5, lineColor, -1);
-		cv::circle(image, p2, 5, lineColor, -1);
+		cv::line(image, p1, p2, lineColor, 10);
+		/*cv::circle(image, p1, 5, lineColor, -1);
+		cv::circle(image, p2, 5, lineColor, -1);*/
 	}
 
 	void setColor(cv::Scalar color) {

@@ -123,8 +123,10 @@ private:
 	 */
 	void onNewImage();
 
-	Base::DataStreamIn <cv::Mat> in_img;
-	Base::DataStreamIn <Types::CameraInfo> in_camera_info;
+	Base::DataStreamIn <cv::Mat, Base::DataStreamBuffer::Newest,
+			Base::Synchronization::Mutex> in_img;
+	Base::DataStreamIn <Types::CameraInfo, Base::DataStreamBuffer::Newest,
+			Base::Synchronization::Mutex> in_camera_info;
 	Base::DataStreamOut <cv::Mat> out_img;
 	Base::DataStreamOut <Types::CameraInfo> out_camera_info;
 

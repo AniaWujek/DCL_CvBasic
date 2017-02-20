@@ -26,7 +26,8 @@ FeatureDetector::FeatureDetector(const std::string & name) :
 		brisk_threshold("brisk.threshold", 30), 
 		brisk_octaves("brisk.octaves", 3), 
 		brisk_pattern_scale("brisk.pattern_scale", 1.0), 
-		active_extractor("active_extractor", std::string("ORB"), "combo") {
+		active_extractor("active_extractor", std::string("ORB"), "combo"),
+		make_roi("make_roi", 0) {
 	
 	orb_nfeatures.addConstraint("0");
 	orb_nfeatures.addConstraint("999");
@@ -48,6 +49,8 @@ FeatureDetector::FeatureDetector(const std::string & name) :
 	active_extractor.addConstraint("ORB");
 	active_extractor.addConstraint("BRISK");
 	registerProperty(active_extractor);
+
+	registerProperty(make_roi);
 
 }
 
@@ -92,11 +95,18 @@ void FeatureDetector::onNewImageA() {
 	
 	std::vector<cv::KeyPoint> keypoints;
 	cv::Mat descriptors;
+
+	if(make_roi) {
+		int centerX = img.cols/2;
+		int centerY = img.rows/2;
+		img = img(cv::Rect(centerX-250,centerY-250,500,500));
+	}
 	
 	if (active_extractor == "ORB") {
 		//cv::ORB orb(orb_nfeatures, orb_scale_factor, orb_nlevels, orb_edge_threshold, 0, orb_wta_k, orb_score_type, orb_patch_size);
 		//orb(img, cv::Mat(), keypoints, descriptors);
 		cv::Ptr<cv::ORB> orb = cv::ORB::create(orb_nfeatures, orb_scale_factor, orb_nlevels, orb_edge_threshold, 0, orb_wta_k, orb_score_type, orb_patch_size);
+
 		orb->detectAndCompute(img, cv::Mat(), keypoints, descriptors);
 	}
 	

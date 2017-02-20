@@ -1,25 +1,22 @@
-<Task>
-	<!-- reference task information -->
-	<Reference>
-		<Author>
-			<name>Maciej Stefańczyk</name>
-			<link></link>
-		</Author>
-	
-		<Description>
-			<brief>Simple camera viewer</brief>
-			<full>Simple camera viewer</full>
-		</Description>
-	</Reference>
-
 	<!-- task definition -->
+	
+<Task>
 	<Subtasks>
 		<Subtask name="Processing">
-			<Executor name="Exec1" period="0.01">
-				<Component name="Source" type="CvBasic:CameraOpenCV" priority="1" bump="0">
-					<param name="device">0</param>
+			<Executor name="Exec1" period="0.1">
+				<Component name="Source" type="CvBasic:Sequence" priority="1" bump="0">
+					<param name="sequence.directory">%[TASK_LOCATION]%/../../data3/</param>
+					<param name="sequence.pattern">.*\.png</param>
+					<param name="mode.loop">1</param>
 				</Component>
-				
+				<Component name="CameraInfo" type="CvCoreTypes:CameraInfoProvider" priority="2">
+					<param name="width">1296</param>
+					<param name="height">1032</param>
+					<param name="camera_matrix">1299.351750 0.000000 650.629886 ; 0.000000 1292.515181 532.876867 ; 0.000000 0.000000 1.000000</param>
+					<param name="dist_coeffs">-0.420177 0.261718 0.002704 0.000718 0.000000</param>
+				</Component>
+				<Component name="Undistort" type="CvBasic:CvUndistort" priority="3">
+				</Component>
 			</Executor>
 		</Subtask>
 			
@@ -27,21 +24,27 @@
 			<Executor name="Exec2" period="0.05">
 				<Component name="Window" type="CvBasic:CvWindow" priority="1" bump="0">
 					<param name="count">1</param>
-					<param name="title">Okienko</param>
+					<param name="title">Camera View</param>
+					<param name="save.directory">/tmp</param>
 				</Component>
 			</Executor>
 		</Subtask>
 	</Subtasks>
 	
-	<!-- connections between events and handelrs -->
-	<Events>
-	</Events>
 	
 	<!-- pipes connecting datastreams -->
 	<DataStreams>
 		<Source name="Source.out_img">
-			<sink>Window.in_img</sink>
+			<sink>Undistort.in_img</sink>
 		</Source>
+		<Source name="CameraInfo.out_camera_info">
+        	<sink>Undistort.in_camera_info</sink>
+        </Source>
+        <Source name="Undistort.out_img">
+           	<sink>Window.in_img</sink>
+        </Source>
 	</DataStreams>
 </Task>
+
+
 
